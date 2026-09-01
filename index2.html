@@ -1,0 +1,5633 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Finora - Personal Finance</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+Thai:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<style>
+:root{
+    --primary:#5b4df5;
+    --primary-dark:#4639dc;
+    --purple:#7c3aed;
+    --green:#10b981;
+    --red:#ef4444;
+    --orange:#f59e0b;
+    --blue:#3b82f6;
+    --text:#172033;
+    --muted:#7b8497;
+    --line:#e8ebf2;
+    --bg:#f5f7fb;
+    --white:#fff;
+    --shadow:0 10px 30px rgba(30,41,59,.07);
+}
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+    font-family:"Noto Sans Thai","Inter",sans-serif;
+}
+
+body{
+    min-height:100vh;
+    background:
+        radial-gradient(circle at top left,#29215f 0,#0f172a 35%,#0b1120 100%);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    color:var(--text);
+}
+
+button,input,select{
+    font:inherit;
+}
+
+button{
+    cursor:pointer;
+}
+
+/* ================= PHONE ================= */
+
+.phone{
+    width:390px;
+    height:844px;
+    background:var(--bg);
+    border:9px solid #1e293b;
+    border-radius:42px;
+    overflow:hidden;
+    position:relative;
+    box-shadow:0 30px 70px rgba(0,0,0,.4);
+}
+
+/* ================= HEADER ================= */
+
+.header{
+    height:76px;
+    background:rgba(255,255,255,.96);
+    padding:18px 18px 12px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    border-bottom:1px solid var(--line);
+}
+
+.header small{
+    display:block;
+    color:var(--muted);
+    font-size:10px;
+    margin-bottom:2px;
+}
+
+.header h2{
+    font-size:18px;
+    font-weight:800;
+}
+
+.header-btn{
+    width:40px;
+    height:40px;
+    border:0;
+    border-radius:13px;
+    background:#f0efff;
+    color:var(--primary);
+}
+
+/* ================= BODY ================= */
+
+.body{
+    height:calc(100% - 151px);
+    overflow-y:auto;
+    padding:18px 16px 25px;
+}
+
+.body::-webkit-scrollbar{
+    width:0;
+}
+
+.view{
+    display:none;
+}
+
+.view.active{
+    display:block;
+}
+
+/* ================= GENERAL ================= */
+
+.card{
+    background:var(--white);
+    border:1px solid var(--line);
+    border-radius:20px;
+    padding:16px;
+    margin-bottom:14px;
+    box-shadow:var(--shadow);
+}
+
+.section-title{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin:5px 2px 11px;
+}
+
+.section-title h3{
+    font-size:15px;
+    font-weight:800;
+}
+
+.section-title button{
+    border:0;
+    background:none;
+    color:var(--primary);
+    font-size:11px;
+    font-weight:700;
+}
+
+/* ================= HOME ================= */
+
+.balance{
+    padding:20px;
+    border-radius:23px;
+    color:#fff;
+    margin-bottom:14px;
+    background:
+        radial-gradient(circle at 90% 10%,rgba(255,255,255,.25),transparent 28%),
+        linear-gradient(135deg,#5146e5,#7c3aed);
+    box-shadow:0 14px 30px rgba(91,77,245,.25);
+}
+
+.balance .label{
+    font-size:11px;
+    opacity:.8;
+}
+
+.balance h1{
+    font-size:29px;
+    margin:5px 0 15px;
+    letter-spacing:-1px;
+}
+
+.balance-row{
+    display:flex;
+    gap:8px;
+}
+
+.balance-pill{
+    background:rgba(255,255,255,.15);
+    padding:7px 10px;
+    border-radius:10px;
+    font-size:10px;
+}
+
+/* ================= AI ================= */
+
+.ai{
+    display:flex;
+    gap:11px;
+    padding:15px;
+    background:linear-gradient(135deg,#f1edff,#faf8ff);
+    border:1px solid #ddd6fe;
+    border-radius:19px;
+    margin-bottom:17px;
+}
+
+.ai-icon{
+    flex:0 0 38px;
+    height:38px;
+    border-radius:12px;
+    background:linear-gradient(135deg,#7c3aed,#5b4df5);
+    color:#fff;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+.ai h4{
+    font-size:12px;
+    color:#5b21b6;
+}
+
+.ai p{
+    margin-top:3px;
+    color:#7256a9;
+    font-size:10px;
+    line-height:1.5;
+}
+
+/* ================= QUICK ACTION ================= */
+
+.quick-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+    margin-bottom:17px;
+}
+
+.quick{
+    border:1px solid var(--line);
+    background:#fff;
+    border-radius:17px;
+    padding:14px;
+    text-align:left;
+    transition:.2s;
+}
+
+.quick:hover{
+    transform:translateY(-2px);
+    border-color:#c7c2ff;
+}
+
+.quick-icon{
+    width:34px;
+    height:34px;
+    border-radius:11px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    margin-bottom:8px;
+}
+
+.quick h4{
+    font-size:12px;
+}
+
+.quick p{
+    color:var(--muted);
+    font-size:9px;
+    margin-top:2px;
+}
+
+/* ================= GOALS ================= */
+
+.goal{
+    background:#fff;
+    border:1px solid var(--line);
+    border-radius:18px;
+    padding:15px;
+    margin-bottom:10px;
+}
+
+.goal-top{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.goal-info{
+    display:flex;
+    gap:10px;
+    align-items:center;
+}
+
+.goal-icon{
+    width:37px;
+    height:37px;
+    border-radius:12px;
+    background:#ede9fe;
+    color:#7c3aed;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.goal h4{
+    font-size:12px;
+}
+
+.goal p{
+    font-size:9px;
+    color:var(--muted);
+}
+
+.goal-amount{
+    font-size:12px;
+    font-weight:800;
+    color:var(--purple);
+}
+
+.progress{
+    height:7px;
+    background:#edf0f5;
+    border-radius:10px;
+    overflow:hidden;
+    margin:10px 0 7px;
+}
+
+.progress div{
+    height:100%;
+    background:linear-gradient(90deg,#5b4df5,#8b5cf6);
+    border-radius:10px;
+}
+
+.goal-bottom{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.goal-bottom span{
+    font-size:9px;
+    color:var(--muted);
+}
+
+.add-goal-money{
+    border:0;
+    color:var(--primary);
+    background:#f0efff;
+    border-radius:9px;
+    padding:5px 8px;
+    font-size:9px;
+    font-weight:700;
+}
+
+/* ================= TRANSACTIONS ================= */
+
+.transaction-item{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:12px 0;
+    border-bottom:1px solid #f0f2f6;
+    cursor:pointer;
+}
+
+.transaction-item:last-child{
+    border-bottom:0;
+}
+
+.transaction-left{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    min-width:0;
+}
+
+.transaction-icon{
+    width:38px;
+    height:38px;
+    border-radius:12px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-shrink:0;
+}
+
+.transaction-icon.expense{
+    background:#fff1f2;
+    color:#ef4444;
+}
+
+.transaction-icon.income{
+    background:#ecfdf5;
+    color:#10b981;
+}
+
+.transaction-name{
+    font-size:11px;
+    font-weight:700;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    max-width:170px;
+}
+
+.transaction-meta{
+    color:var(--muted);
+    font-size:8px;
+    margin-top:2px;
+}
+
+.transaction-money{
+    font-size:11px;
+    font-weight:800;
+    white-space:nowrap;
+}
+
+.transaction-money.expense{
+    color:#ef4444;
+}
+
+.transaction-money.income{
+    color:#10b981;
+}
+
+.empty{
+    text-align:center;
+    color:var(--muted);
+    font-size:10px;
+    padding:25px 10px;
+}
+
+/* ================= STATISTICS ================= */
+
+.periods{
+    display:flex;
+    gap:7px;
+    overflow-x:auto;
+    padding-bottom:3px;
+    margin-bottom:13px;
+}
+
+.periods::-webkit-scrollbar{
+    display:none;
+}
+
+.period{
+    flex:0 0 auto;
+    border:1px solid var(--line);
+    background:#fff;
+    color:var(--muted);
+    padding:7px 12px;
+    border-radius:20px;
+    font-size:10px;
+}
+
+.period.active{
+    background:var(--primary);
+    border-color:var(--primary);
+    color:#fff;
+}
+
+.stat-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+    margin-bottom:14px;
+}
+
+.stat{
+    background:#fff;
+    border:1px solid var(--line);
+    border-radius:17px;
+    padding:14px;
+}
+
+.stat small{
+    color:var(--muted);
+    font-size:9px;
+}
+
+.stat strong{
+    display:block;
+    font-size:17px;
+    margin-top:3px;
+}
+
+/* ================= IMPROVED LINE CHART ================= */
+
+.chart-card{
+    background:#fff;
+    border:1px solid var(--line);
+    border-radius:20px;
+    padding:16px;
+    margin-bottom:14px;
+}
+
+.chart-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:13px;
+}
+
+.chart-header h3{
+    font-size:13px;
+}
+
+.chart-header span{
+    font-size:9px;
+    color:var(--muted);
+    background:#f8fafc;
+    padding:4px 7px;
+    border-radius:7px;
+}
+
+/*
+    Chart container
+*/
+
+.line-chart{
+    position:relative;
+    width:100%;
+    height:225px;
+    padding-left:34px;
+    padding-bottom:30px;
+    border-radius:12px;
+    overflow:visible;
+
+    background:
+        repeating-linear-gradient(
+            to bottom,
+            transparent 0,
+            transparent 40px,
+            #edf0f5 41px,
+            #edf0f5 42px
+        );
+}
+
+/*
+    Y axis
+*/
+
+.y-axis{
+    position:absolute;
+    left:0;
+    top:0;
+    bottom:40px;
+    width:30px;
+
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+
+    color:#94a3b8;
+    font-size:7px;
+    line-height:1;
+
+    text-align:right;
+    padding-right:5px;
+
+    pointer-events:none;
+}
+
+/*
+    SVG
+*/
+
+.line-chart svg{
+    width:100%;
+    height:180px;
+    display:block;
+    overflow:visible;
+}
+
+/*
+    X axis
+*/
+
+.line-chart-labels{
+    position:absolute;
+    left:34px;
+    right:0;
+    bottom:8px;
+
+    display:flex;
+    justify-content:space-between;
+
+    color:#94a3b8;
+    font-size:8px;
+}
+
+/*
+    Tooltip
+*/
+
+.chart-tooltip{
+    position:absolute;
+    display:none;
+
+    padding:8px 11px;
+
+    background:#172033;
+    color:#fff;
+
+    border-radius:10px;
+
+    font-size:9px;
+    font-weight:600;
+
+    pointer-events:none;
+
+    z-index:10;
+
+    box-shadow:0 6px 18px rgba(15,23,42,.2);
+
+    white-space:nowrap;
+}
+
+/*
+    Legend
+*/
+
+.chart-legend{
+    display:flex;
+    gap:18px;
+    margin-top:10px;
+    font-size:9px;
+    color:#64748b;
+}
+
+.chart-legend span{
+    display:flex;
+    align-items:center;
+    gap:6px;
+}
+
+.chart-dot{
+    width:9px;
+    height:9px;
+    border-radius:50%;
+}
+
+.chart-dot.income{
+    background:#5b4df5;
+}
+
+.chart-dot.expense{
+    background:#ef4444;
+}
+
+/* ================= DONUT ================= */
+
+.donut-wrap{
+    display:flex;
+    align-items:center;
+    gap:18px;
+}
+
+.donut{
+    width:130px;
+    height:130px;
+    border-radius:50%;
+    background:conic-gradient(
+        #5b4df5 0 38%,
+        #7c3aed 38% 62%,
+        #10b981 62% 78%,
+        #f59e0b 78% 90%,
+        #e5e7eb 90% 100%
+    );
+    position:relative;
+    flex-shrink:0;
+}
+
+.donut::after{
+    content:"";
+    position:absolute;
+    inset:28px;
+    background:#fff;
+    border-radius:50%;
+}
+
+.donut-center{
+    position:absolute;
+    z-index:2;
+    inset:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-direction:column;
+}
+
+.donut-center strong{
+    font-size:16px;
+}
+
+.donut-center span{
+    color:var(--muted);
+    font-size:8px;
+}
+
+.legend{
+    display:flex;
+    flex-direction:column;
+    gap:9px;
+}
+
+.legend-row{
+    display:flex;
+    align-items:center;
+    gap:7px;
+    font-size:9px;
+}
+
+.dot{
+    width:8px;
+    height:8px;
+    border-radius:50%;
+}
+
+/* ================= WALLET ================= */
+
+.wallet-total{
+    padding:20px;
+    border-radius:23px;
+    color:#fff;
+    background:
+        radial-gradient(circle at 90% 0,rgba(255,255,255,.2),transparent 30%),
+        linear-gradient(135deg,#047857,#10b981);
+    margin-bottom:15px;
+    box-shadow:0 14px 28px rgba(16,185,129,.18);
+}
+
+.wallet-total small{
+    opacity:.8;
+    font-size:10px;
+}
+
+.wallet-total h1{
+    margin-top:4px;
+    font-size:29px;
+}
+
+.wallet-total-row{
+    display:flex;
+    gap:8px;
+    margin-top:14px;
+}
+
+.wallet-summary-pill{
+    background:rgba(255,255,255,.15);
+    border-radius:10px;
+    padding:7px 9px;
+    font-size:9px;
+}
+
+.wallet-section{
+    background:#fff;
+    border:1px solid var(--line);
+    border-radius:20px;
+    padding:13px;
+    margin-bottom:14px;
+    box-shadow:var(--shadow);
+}
+
+.wallet{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    background:#fff;
+    border:1px solid #edf0f5;
+    border-radius:17px;
+    padding:13px;
+    margin-bottom:9px;
+    transition:.2s;
+}
+
+.wallet:last-child{
+    margin-bottom:0;
+}
+
+.wallet:hover{
+    border-color:#d7d2ff;
+    transform:translateY(-1px);
+}
+
+.wallet-left{
+    display:flex;
+    align-items:center;
+    gap:11px;
+    min-width:0;
+}
+
+.wallet-icon{
+    width:42px;
+    height:42px;
+    border-radius:13px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-shrink:0;
+}
+
+.wallet h4{
+    font-size:12px;
+}
+
+.wallet p{
+    color:var(--muted);
+    font-size:9px;
+    margin-top:2px;
+}
+
+.wallet-money{
+    font-size:12px;
+    font-weight:800;
+}
+
+.wallet-actions{
+    display:flex;
+    justify-content:flex-end;
+    gap:5px;
+    margin-top:5px;
+}
+
+.small-btn{
+    width:30px;
+    height:30px;
+    border:0;
+    border-radius:9px;
+    background:#f3f4f6;
+    color:#64748b;
+}
+
+.wallet-add{
+    border:0;
+    background:#ecfdf5;
+    color:#059669;
+    border-radius:9px;
+    padding:5px 8px;
+    font-size:8px;
+    font-weight:800;
+}
+
+/* ================= SETTINGS ================= */
+
+.profile{
+    text-align:center;
+    background:#fff;
+    border:1px solid var(--line);
+    border-radius:20px;
+    padding:20px;
+    margin-bottom:14px;
+}
+
+.avatar{
+    width:58px;
+    height:58px;
+    border-radius:18px;
+    margin:auto;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:#fff;
+    font-size:20px;
+    font-weight:800;
+    background:linear-gradient(135deg,#5b4df5,#8b5cf6);
+}
+
+.profile h3{
+    font-size:15px;
+    margin-top:8px;
+}
+
+.profile p{
+    color:var(--muted);
+    font-size:10px;
+}
+
+.setting-group{
+    background:#fff;
+    border:1px solid var(--line);
+    border-radius:18px;
+    overflow:hidden;
+    margin-bottom:13px;
+}
+
+.setting{
+    padding:14px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    border-bottom:1px solid #f1f3f6;
+}
+
+.setting:last-child{
+    border-bottom:0;
+}
+
+.setting-left{
+    display:flex;
+    align-items:center;
+    gap:11px;
+}
+
+.setting-icon{
+    width:34px;
+    height:34px;
+    border-radius:10px;
+    background:#f1f5f9;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    color:#475569;
+}
+
+.setting h4{
+    font-size:11px;
+}
+
+.setting p{
+    font-size:8px;
+    color:var(--muted);
+    margin-top:2px;
+}
+
+.chevron{
+    color:#a1a8b5;
+}
+
+/* ================= SWITCH ================= */
+
+.switch{
+    width:39px;
+    height:22px;
+    border-radius:20px;
+    background:#d1d5db;
+    padding:3px;
+}
+
+.switch span{
+    width:16px;
+    height:16px;
+    display:block;
+    background:#fff;
+    border-radius:50%;
+    transition:.2s;
+}
+
+.switch.on{
+    background:var(--primary);
+}
+
+.switch.on span{
+    transform:translateX(17px);
+}
+
+/* ================= NAV ================= */
+
+.nav{
+    position:absolute;
+    bottom:0;
+    left:0;
+    right:0;
+    height:75px;
+    background:rgba(255,255,255,.97);
+    border-top:1px solid var(--line);
+    display:flex;
+    justify-content:space-around;
+    align-items:center;
+    padding:0 8px 10px;
+    z-index:20;
+}
+
+.nav-item{
+    border:0;
+    background:none;
+    color:#a0a7b4;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:4px;
+    font-size:9px;
+}
+
+.nav-item i{
+    font-size:17px;
+}
+
+.nav-item.active{
+    color:var(--primary);
+    font-weight:700;
+}
+
+.add-btn{
+    width:49px;
+    height:49px;
+    border:0;
+    border-radius:50%;
+    color:#fff;
+    background:linear-gradient(135deg,#5b4df5,#7c3aed);
+    box-shadow:0 8px 20px rgba(91,77,245,.35);
+    margin-top:-18px;
+    font-size:19px;
+}
+
+/* ================= MODAL ================= */
+
+.modal{
+    position:absolute;
+    inset:0;
+    background:rgba(15,23,42,.6);
+    z-index:100;
+    display:flex;
+    align-items:flex-end;
+    opacity:0;
+    pointer-events:none;
+    transition:.25s;
+}
+
+.modal.show{
+    opacity:1;
+    pointer-events:auto;
+}
+
+.sheet{
+    width:100%;
+    background:#fff;
+    border-radius:25px 25px 0 0;
+    padding:20px 17px 28px;
+    transform:translateY(100%);
+    transition:.3s;
+    max-height:85%;
+    overflow:auto;
+}
+
+.modal.show .sheet{
+    transform:translateY(0);
+}
+
+.sheet-head{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin-bottom:17px;
+}
+
+.sheet-head h3{
+    font-size:15px;
+}
+
+.close{
+    border:0;
+    background:#f1f5f9;
+    width:32px;
+    height:32px;
+    border-radius:9px;
+}
+
+/* ================= FORMS ================= */
+
+.field{
+    margin-bottom:12px;
+}
+
+.field label{
+    display:block;
+    font-size:10px;
+    color:#64748b;
+    margin-bottom:5px;
+}
+
+.field input,
+.field select{
+    width:100%;
+    height:43px;
+    border:1px solid #e2e8f0;
+    border-radius:12px;
+    outline:none;
+    padding:0 12px;
+    background:#f8fafc;
+    font-size:12px;
+}
+
+.field input:focus,
+.field select:focus{
+    border-color:var(--primary);
+    background:#fff;
+}
+
+.submit{
+    width:100%;
+    height:45px;
+    border:0;
+    border-radius:13px;
+    background:linear-gradient(135deg,#5b4df5,#7c3aed);
+    color:#fff;
+    font-size:12px;
+    font-weight:700;
+    margin-top:5px;
+}
+
+/* ================= TOAST ================= */
+
+.toast{
+    position:absolute;
+    left:18px;
+    right:18px;
+    bottom:90px;
+    background:#172033;
+    color:#fff;
+    padding:12px 14px;
+    border-radius:13px;
+    font-size:10px;
+    text-align:center;
+    opacity:0;
+    transform:translateY(15px);
+    pointer-events:none;
+    transition:.25s;
+    z-index:200;
+}
+
+.toast.show{
+    opacity:1;
+    transform:translateY(0);
+}
+
+/* ================= DETAIL ================= */
+
+.detail-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:10px 0;
+    border-bottom:1px solid #f1f3f6;
+    font-size:10px;
+}
+
+.detail-row:last-child{
+    border-bottom:0;
+}
+
+.detail-label{
+    color:var(--muted);
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media(max-height:750px){
+
+    .phone{
+        height:100vh;
+        border-radius:0;
+        border:0;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="phone">
+
+<!-- ================= HEADER ================= -->
+
+<header class="header">
+
+    <div>
+
+        <small id="headerSub">
+            ซิงค์ข้อมูลล่าสุด • วันนี้
+        </small>
+
+        <h2 id="headerTitle">
+            สวัสดี, Alex 👋
+        </h2>
+
+    </div>
+
+    <button class="header-btn"
+            onclick="showToast('ไม่มีการแจ้งเตือนใหม่')">
+
+        <i class="fa-regular fa-bell"></i>
+
+    </button>
+
+</header>
+
+
+<!-- ================= BODY ================= -->
+
+<main class="body">
+
+<!-- ================= HOME ================= -->
+
+<section id="home" class="view active">
+
+    <div class="balance">
+
+        <div class="label">
+            ยอดเงินรวมทั้งหมด
+        </div>
+
+        <h1 id="totalBalance">
+            ฿84,250.00
+        </h1>
+
+        <div class="balance-row">
+
+            <div class="balance-pill">
+
+                <i class="fa-solid fa-arrow-trend-up"></i>
+
+                รายรับ
+                <span id="homeIncome">
+                    ฿45,000
+                </span>
+
+            </div>
+
+            <div class="balance-pill">
+
+                <i class="fa-solid fa-arrow-trend-down"></i>
+
+                รายจ่าย
+                <span id="homeExpense">
+                    ฿12,450
+                </span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="ai">
+
+        <div class="ai-icon">
+            <i class="fa-solid fa-wand-magic-sparkles"></i>
+        </div>
+
+        <div>
+
+            <h4>
+                AI Financial Assistant
+            </h4>
+
+            <p>
+                เดือนนี้คุณใช้จ่ายน้อยลง 28%
+                และมีโอกาสเพิ่มเงินออมได้อีกประมาณ ฿3,200
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="section-title">
+
+        <h3>
+            จัดการเงิน
+        </h3>
+
+    </div>
+
+
+    <div class="quick-grid">
+
+        <button class="quick"
+                onclick="openModal('transactionModal')">
+
+            <div class="quick-icon"
+                 style="background:#eef2ff;color:#4f46e5">
+
+                <i class="fa-solid fa-plus"></i>
+
+            </div>
+
+            <h4>
+                เพิ่มรายการ
+            </h4>
+
+            <p>
+                รายรับ / รายจ่าย
+            </p>
+
+        </button>
+
+
+        <button class="quick"
+                onclick="openModal('scanModal')">
+
+            <div class="quick-icon"
+                 style="background:#ecfdf5;color:#10b981">
+
+                <i class="fa-solid fa-receipt"></i>
+
+            </div>
+
+            <h4>
+                สแกนใบเสร็จ
+            </h4>
+
+            <p>
+                AI อ่านข้อมูลอัตโนมัติ
+            </p>
+
+        </button>
+
+
+        <button class="quick"
+                onclick="switchTab(1)">
+
+            <div class="quick-icon"
+                 style="background:#fff7ed;color:#f59e0b">
+
+                <i class="fa-solid fa-chart-line"></i>
+
+            </div>
+
+            <h4>
+                ดูสถิติ
+            </h4>
+
+            <p>
+                วิเคราะห์ค่าใช้จ่าย
+            </p>
+
+        </button>
+
+
+        <button class="quick"
+                onclick="switchTab(2)">
+
+            <div class="quick-icon"
+                 style="background:#eff6ff;color:#3b82f6">
+
+                <i class="fa-solid fa-wallet"></i>
+
+            </div>
+
+            <h4>
+                บัญชีของฉัน
+            </h4>
+
+            <p>
+                จัดการกระเป๋าเงิน
+            </p>
+
+        </button>
+
+    </div>
+
+
+    <div class="section-title">
+
+        <h3>
+            เป้าหมายการออม
+        </h3>
+
+        <button onclick="openModal('goalModal')">
+            + เพิ่มเป้าหมาย
+        </button>
+
+    </div>
+
+
+    <div id="goalList">
+
+        <div class="goal">
+
+            <div class="goal-top">
+
+                <div class="goal-info">
+
+                    <div class="goal-icon">
+
+                        <i class="fa-solid fa-plane"></i>
+
+                    </div>
+
+                    <div>
+
+                        <h4>
+                            ทริปญี่ปุ่น 2026
+                        </h4>
+
+                        <p>
+                            เป้าหมาย ฿50,000
+                        </p>
+
+                    </div>
+
+                </div>
+
+                <div class="goal-amount"
+                     id="goalAmount1">
+
+                    ฿25,000
+
+                </div>
+
+            </div>
+
+
+            <div class="progress">
+
+                <div id="goalProgress1"
+                     style="width:50%">
+                </div>
+
+            </div>
+
+
+            <div class="goal-bottom">
+
+                <span id="goalPercent1">
+                    50% สำเร็จ
+                </span>
+
+                <button class="add-goal-money"
+                        onclick="openGoalMoney(1)">
+
+                    + เติมเงิน
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="section-title"
+         style="margin-top:18px">
+
+        <h3>
+            รายการล่าสุด
+        </h3>
+
+        <button onclick="openAllTransactions()">
+            ดูทั้งหมด
+        </button>
+
+    </div>
+
+
+    <div class="card"
+         style="padding:0 15px">
+
+        <div id="recentTransactions"></div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= STATISTICS ================= -->
+
+<section id="stats" class="view">
+
+    <div class="section-title">
+
+        <h3>
+            สถิติการเงิน
+        </h3>
+
+    </div>
+
+
+    <div class="periods">
+
+        <button class="period active"
+                data-period="month"
+                onclick="changePeriod('month',this)">
+
+            เดือนนี้
+
+        </button>
+
+        <button class="period"
+                onclick="changePeriod('last',this)">
+
+            เดือนที่แล้ว
+
+        </button>
+
+        <button class="period"
+                onclick="changePeriod('3month',this)">
+
+            3 เดือน
+
+        </button>
+
+        <button class="period"
+                onclick="changePeriod('year',this)">
+
+            ปี 2026
+
+        </button>
+
+    </div>
+
+
+    <div class="stat-grid">
+
+        <div class="stat">
+
+            <small>
+                รายรับรวม
+            </small>
+
+            <strong id="income"
+                    style="color:#10b981">
+
+                +฿45,000
+
+            </strong>
+
+        </div>
+
+
+        <div class="stat">
+
+            <small>
+                รายจ่ายรวม
+            </small>
+
+            <strong id="expense"
+                    style="color:#ef4444">
+
+                -฿12,450
+
+            </strong>
+
+        </div>
+
+
+        <div class="stat">
+
+            <small>
+                เงินออม
+            </small>
+
+            <strong id="saving"
+                    style="color:#5b4df5">
+
+                ฿32,550
+
+            </strong>
+
+        </div>
+
+
+        <div class="stat">
+
+            <small>
+                อัตราการออม
+            </small>
+
+            <strong id="savingRate">
+
+                72.3%
+
+            </strong>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= IMPROVED CHART ================= -->
+
+    <div class="chart-card">
+
+        <div class="chart-header">
+
+            <h3>
+                แนวโน้มรายรับ - รายจ่าย
+            </h3>
+
+            <span id="chartPeriod">
+                เดือนนี้
+            </span>
+
+        </div>
+
+
+        <div class="line-chart"
+             id="lineChart">
+
+            <!-- Y AXIS -->
+
+            <div class="y-axis"
+                 id="yAxis">
+            </div>
+
+
+            <!-- SVG -->
+
+            <svg id="chartSvg"
+                 viewBox="0 0 350 180"
+                 preserveAspectRatio="none">
+
+                <defs>
+
+                    <linearGradient id="incomeFill"
+                                    x1="0"
+                                    y1="0"
+                                    x2="0"
+                                    y2="1">
+
+                        <stop offset="0%"
+                              stop-color="#5b4df5"
+                              stop-opacity=".18"/>
+
+                        <stop offset="100%"
+                              stop-color="#5b4df5"
+                              stop-opacity="0"/>
+
+                    </linearGradient>
+
+
+                    <linearGradient id="expenseFill"
+                                    x1="0"
+                                    y1="0"
+                                    x2="0"
+                                    y2="1">
+
+                        <stop offset="0%"
+                              stop-color="#ef4444"
+                              stop-opacity=".12"/>
+
+                        <stop offset="100%"
+                              stop-color="#ef4444"
+                              stop-opacity="0"/>
+
+                    </linearGradient>
+
+                </defs>
+
+
+                <path id="incomeArea"
+                      fill="url(#incomeFill)"
+                      stroke="none"/>
+
+
+                <path id="expenseArea"
+                      fill="url(#expenseFill)"
+                      stroke="none"/>
+
+
+                <path id="incomeLine"
+                      fill="none"
+                      stroke="#5b4df5"
+                      stroke-width="3"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"/>
+
+
+                <path id="expenseLine"
+                      fill="none"
+                      stroke="#ef4444"
+                      stroke-width="3"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"/>
+
+
+                <g id="incomePoints"></g>
+
+                <g id="expensePoints"></g>
+
+            </svg>
+
+
+            <!-- TOOLTIP -->
+
+            <div id="chartTooltip"
+                 class="chart-tooltip">
+            </div>
+
+
+            <!-- X AXIS -->
+
+            <div class="line-chart-labels"
+                 id="chartLabels">
+            </div>
+
+        </div>
+
+
+        <div class="chart-legend">
+
+            <span>
+
+                <i class="chart-dot income"></i>
+
+                รายรับ
+
+            </span>
+
+
+            <span>
+
+                <i class="chart-dot expense"></i>
+
+                รายจ่าย
+
+            </span>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= DONUT ================= -->
+
+    <div class="chart-card">
+
+        <div class="chart-header">
+
+            <h3>
+                สัดส่วนค่าใช้จ่าย
+            </h3>
+
+            <span>
+                เดือนนี้
+            </span>
+
+        </div>
+
+
+        <div class="donut-wrap">
+
+            <div class="donut">
+
+                <div class="donut-center">
+
+                    <strong>
+                        ฿12.4K
+                    </strong>
+
+                    <span>
+                        ทั้งหมด
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="legend">
+
+                <div class="legend-row">
+
+                    <i class="dot"
+                       style="background:#5b4df5"></i>
+
+                    อาหาร 38%
+
+                </div>
+
+
+                <div class="legend-row">
+
+                    <i class="dot"
+                       style="background:#7c3aed"></i>
+
+                    ช้อปปิ้ง 24%
+
+                </div>
+
+
+                <div class="legend-row">
+
+                    <i class="dot"
+                       style="background:#10b981"></i>
+
+                    เดินทาง 16%
+
+                </div>
+
+
+                <div class="legend-row">
+
+                    <i class="dot"
+                       style="background:#f59e0b"></i>
+
+                    บิล 12%
+
+                </div>
+
+
+                <div class="legend-row">
+
+                    <i class="dot"
+                       style="background:#e5e7eb"></i>
+
+                    อื่นๆ 10%
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="card">
+
+        <div class="section-title">
+
+            <h3>
+                คำแนะนำจาก AI
+            </h3>
+
+        </div>
+
+        <p style="
+            font-size:10px;
+            color:#64748b;
+            line-height:1.7;
+        ">
+
+            ค่าอาหารเป็นหมวดที่ใช้เงินมากที่สุดในเดือนนี้
+            หากลดค่าใช้จ่ายลงประมาณ 15%
+            คุณจะสามารถเพิ่มเงินออมได้อีกประมาณ ฿1,200
+
+        </p>
+
+    </div>
+
+</section>
+
+
+<!-- ================= WALLET ================= -->
+
+<section id="wallet" class="view">
+
+    <div class="wallet-total">
+
+        <small>
+            ยอดเงินทุกบัญชี
+        </small>
+
+        <h1 id="walletTotal">
+            ฿84,250.00
+        </h1>
+
+        <div class="wallet-total-row">
+
+            <div class="wallet-summary-pill">
+
+                <i class="fa-solid fa-building-columns"></i>
+
+                <span id="walletCount">
+                    3
+                </span>
+                บัญชี
+
+            </div>
+
+
+            <div class="wallet-summary-pill">
+
+                <i class="fa-solid fa-circle-check"></i>
+
+                อัปเดตแล้ว
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="section-title">
+
+        <h3>
+            บัญชีและกระเป๋าเงิน
+        </h3>
+
+        <button onclick="openModal('walletModal')">
+
+            + เพิ่มบัญชี
+
+        </button>
+
+    </div>
+
+
+    <div class="wallet-section">
+
+        <div id="walletList"></div>
+
+    </div>
+
+
+    <div class="card"
+         style="
+            background:linear-gradient(135deg,#f5f3ff,#faf8ff);
+            border-color:#ddd6fe
+         ">
+
+        <div style="
+            display:flex;
+            gap:10px;
+            align-items:center;
+        ">
+
+            <div style="
+                width:38px;
+                height:38px;
+                border-radius:12px;
+                background:#ede9fe;
+                color:#7c3aed;
+                display:flex;
+                align-items:center;
+                justify-content:center;
+            ">
+
+                <i class="fa-solid fa-shield-halved"></i>
+
+            </div>
+
+
+            <div>
+
+                <h4 style="font-size:11px">
+                    ระบบจัดการเงินปลอดภัย
+                </h4>
+
+                <p style="
+                    color:#7b8497;
+                    font-size:8px;
+                    margin-top:3px;
+                ">
+
+                    คุณสามารถเพิ่มเงินหรือดูรายละเอียดแต่ละบัญชีได้
+
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= SETTINGS ================= -->
+
+<section id="settings" class="view">
+
+    <div class="profile">
+
+        <div class="avatar">
+            AM
+        </div>
+
+        <h3>
+            Alex Morgan
+        </h3>
+
+        <p>
+            บัญชีได้รับการยืนยันแล้ว ✓
+        </p>
+
+    </div>
+
+
+    <div class="section-title">
+
+        <h3>
+            บัญชีและความปลอดภัย
+        </h3>
+
+    </div>
+
+
+    <div class="setting-group">
+
+        <div class="setting"
+             onclick="openModal('identityModal')">
+
+            <div class="setting-left">
+
+                <div class="setting-icon"
+                     style="background:#ecfdf5;color:#10b981">
+
+                    <i class="fa-solid fa-shield-check"></i>
+
+                </div>
+
+                <div>
+
+                    <h4>
+                        ยืนยันตัวตน
+                    </h4>
+
+                    <p>
+                        บัญชีของคุณได้รับการยืนยันแล้ว
+                    </p>
+
+                </div>
+
+            </div>
+
+            <i class="fa-solid fa-chevron-right chevron"></i>
+
+        </div>
+
+
+        <div class="setting"
+             onclick="switchTab(2)">
+
+            <div class="setting-left">
+
+                <div class="setting-icon">
+
+                    <i class="fa-solid fa-building-columns"></i>
+
+                </div>
+
+                <div>
+
+                    <h4>
+                        บัญชีธนาคาร
+                    </h4>
+
+                    <p>
+                        เชื่อมต่อแล้ว 1 บัญชี
+                    </p>
+
+                </div>
+
+            </div>
+
+            <i class="fa-solid fa-chevron-right chevron"></i>
+
+        </div>
+
+
+        <div class="setting"
+             onclick="showToast('ตั้งค่าการแจ้งเตือน')">
+
+            <div class="setting-left">
+
+                <div class="setting-icon">
+
+                    <i class="fa-regular fa-bell"></i>
+
+                </div>
+
+                <div>
+
+                    <h4>
+                        การแจ้งเตือน
+                    </h4>
+
+                    <p>
+                        แจ้งเตือนรายการและเป้าหมาย
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="switch on"
+                 onclick="
+                    event.stopPropagation();
+                    toggleSwitch(this);
+                 ">
+
+                <span></span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="section-title">
+
+        <h3>
+            ระบบอัตโนมัติ
+        </h3>
+
+    </div>
+
+
+    <div class="setting-group">
+
+        <div class="setting">
+
+            <div class="setting-left">
+
+                <div class="setting-icon"
+                     style="background:#f3e8ff;color:#7c3aed">
+
+                    <i class="fa-solid fa-wand-magic-sparkles"></i>
+
+                </div>
+
+                <div>
+
+                    <h4>
+                        AI วิเคราะห์การเงิน
+                    </h4>
+
+                    <p>
+                        วิเคราะห์รายรับและรายจ่ายอัตโนมัติ
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="switch on"
+                 onclick="toggleSwitch(this)">
+
+                <span></span>
+
+            </div>
+
+        </div>
+
+
+        <div class="setting"
+             onclick="
+                showToast('ระบบจัดหมวดหมู่รายการอัตโนมัติ')
+             ">
+
+            <div class="setting-left">
+
+                <div class="setting-icon">
+
+                    <i class="fa-solid fa-tags"></i>
+
+                </div>
+
+                <div>
+
+                    <h4>
+                        จัดหมวดหมู่อัตโนมัติ
+                    </h4>
+
+                    <p>
+                        AI แยกหมวดหมู่รายการให้คุณ
+                    </p>
+
+                </div>
+
+            </div>
+
+            <i class="fa-solid fa-chevron-right chevron"></i>
+
+        </div>
+
+    </div>
+
+
+    <div class="setting-group">
+
+        <div class="setting"
+             onclick="
+                showToast('เปิดหน้าเกี่ยวกับแอป')
+             ">
+
+            <div class="setting-left">
+
+                <div class="setting-icon">
+
+                    <i class="fa-solid fa-circle-info"></i>
+
+                </div>
+
+                <div>
+
+                    <h4>
+                        เกี่ยวกับ Finora
+                    </h4>
+
+                    <p>
+                        เวอร์ชัน 2.0.0
+                    </p>
+
+                </div>
+
+            </div>
+
+            <i class="fa-solid fa-chevron-right chevron"></i>
+
+        </div>
+
+    </div>
+
+</section>
+
+</main>
+
+
+<!-- ================= NAV ================= -->
+
+<nav class="nav">
+
+    <button class="nav-item active"
+            onclick="switchTab(0)">
+
+        <i class="fa-solid fa-house"></i>
+
+        <span>
+            หน้าแรก
+        </span>
+
+    </button>
+
+
+    <button class="nav-item"
+            onclick="switchTab(1)">
+
+        <i class="fa-solid fa-chart-line"></i>
+
+        <span>
+            สถิติ
+        </span>
+
+    </button>
+
+
+    <button class="add-btn"
+            onclick="openModal('transactionModal')">
+
+        <i class="fa-solid fa-plus"></i>
+
+    </button>
+
+
+    <button class="nav-item"
+            onclick="switchTab(2)">
+
+        <i class="fa-solid fa-wallet"></i>
+
+        <span>
+            กระเป๋า
+        </span>
+
+    </button>
+
+
+    <button class="nav-item"
+            onclick="switchTab(3)">
+
+        <i class="fa-solid fa-user"></i>
+
+        <span>
+            ตั้งค่า
+        </span>
+
+    </button>
+
+</nav>
+
+
+<!-- ================= TRANSACTION MODAL ================= -->
+
+<div id="transactionModal"
+     class="modal">
+
+    <div class="sheet">
+
+        <div class="sheet-head">
+
+            <h3>
+                เพิ่มรายการเงิน
+            </h3>
+
+            <button class="close"
+                    onclick="closeModal('transactionModal')">
+
+                <i class="fa-solid fa-xmark"></i>
+
+            </button>
+
+        </div>
+
+
+        <div class="field">
+
+            <label>
+                ประเภท
+            </label>
+
+            <select id="transactionType">
+
+                <option value="expense">
+                    รายจ่าย
+                </option>
+
+                <option value="income">
+                    รายรับ
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <div class="field">
+
+            <label>
+                จำนวนเงิน
+            </label>
+
+            <input id="transactionAmount"
+                   type="number"
+                   min="0"
+                   placeholder="เช่น 500">
+
+        </div>
+
+
+        <div class="field">
+
+            <label>
+                หมวดหมู่
+            </label>
+
+            <select id="transactionCategory">
+
+                <option>
+                    อาหาร
+                </option>
+
+                <option>
+                    ช้อปปิ้ง
+                </option>
+
+                <option>
+                    เดินทาง
+                </option>
+
+                <option>
+                    บิลและค่าสาธารณูปโภค
+                </option>
+
+                <option>
+                    สุขภาพ
+                </option>
+
+                <option>
+                    บันเทิง
+                </option>
+
+                <option>
+                    การศึกษา
+                </option>
+
+                <option>
+                    เงินเดือน
+                </option>
+
+                <option>
+                    โบนัส
+                </option>
+
+                <option>
+                    อื่นๆ
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <div class="field">
+
+            <label>
+                บัญชีที่ใช้
+            </label>
+
+            <select id="transactionWallet"></select>
+
+        </div>
+
+
+        <div class="field">
+
+            <label>
+                รายละเอียด
+            </label>
+
+            <input id="transactionNote"
+                   type="text"
+                   placeholder="เช่น ข้าวกลางวัน">
+
+        </div>
+
+
+        <button class="submit"
+                onclick="saveTransaction()">
+
+            บันทึกรายการ
+
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- ================= GOAL MODAL ================= -->
+
+<div id="goalModal"
+     class="modal">
+
+    <div class="sheet">
+
+        <div class="sheet-head">
+
+            <h3>
+                สร้างเป้าหมายการออม
+            </h3>
+
+            <button class="close"
+                    onclick="closeModal('goalModal')">
+
+                <i class="fa-solid fa-xmark"></i>
+
+            </button>
+
+        </div>
+
+
+        <div class="field">
+
+            <label>
+                ชื่อเป้าหมาย
+            </label>
+
+            <input id="newGoalName"
+                   placeholder="เช่น ซื้อโทรศัพท์ใหม่">
+
+        </div>
+
+
+        <div class="field">
+
+            <label>
+                จำนวนเงินเป้าหมาย
+            </label>
+
+            <input id="newGoalTarget"
+                   type="number"
+                   min="1"
+                   placeholder="เช่น 30000">
+
+        </div>
+
+
+        <button class="submit"
+                onclick="createGoal()">
+
+            สร้างเป้าหมาย
+
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- ================= GOAL MONEY MODAL ================= -->
+
+<div id="goalMoneyModal"
+     class="modal">
+
+    <div class="sheet">
+
+        <div class="sheet-head">
+
+            <h3>
+                เติมเงินเข้าเป้าหมาย
+            </h3>
+
+            <button class="close"
+                    onclick="closeModal('goalMoneyModal')">
+
+                <i class="fa-solid fa-xmark"></i>
+
+            </button>
+
+        </div>
+
+
+        <div class="field">
+
+            <label>
+                จำนวนเงินที่ต้องการเติม
+            </label>
+
+            <input id="goalMoney"
+                   type="number"
+                   min="1"
+                   placeholder="เช่น 1000">
+
+        </div>
+
+
+        <button class="submit"
+                onclick="addGoalMoney()">
+
+            เพิ่มเงินเข้าเป้าหมาย
+
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- ================= WALLET MODAL ================= -->
+
+<div id="walletModal"
+     class="modal">
+
+    <div class="sheet">
+
+        <div class="sheet-head">
+
+            <h3>
+                เพิ่มบัญชี
+            </h3>
+
+            <button class="close"
+                    onclick="closeModal('walletModal')">
+
+                <i class="fa-solid fa-xmark"></i>
+
+            </button>
+
+        </div>
+
+
+        <div class="field">
+
+            <label>
+                ชื่อบัญชี
+            </label>
+
+            <input id="walletName"
+                   placeholder="เช่น เงินเก็บ">
+
+        </div>
+
+
+        <div class="field">
+
+            <label>
+                ประเภทบัญชี
+            </label>
+
+            <select id="walletType">
+
+                <option>
+                    บัญชีธนาคาร
+                </option>
+
+                <option>
+                    เงินสด
+                </option>
+
+                <option>
+                    บัตรเครดิต
+                </option>
+
+                <option>
+                    e-Wallet
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <div class="field">
+
+            <label>
+                ยอดเงินเริ่มต้น
+            </label>
+
+            <input id="walletAmount"
+                   type="number"
+                   min="0"
+                   placeholder="เช่น 5000">
+
+        </div>
+
+
+        <button class="submit"
+                onclick="createWallet()">
+
+            เพิ่มบัญชี
+
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- ================= WALLET MONEY MODAL ================= -->
+
+<div id="walletMoneyModal"
+     class="modal">
+
+    <div class="sheet">
+
+        <div class="sheet-head">
+
+            <h3>
+                เติมเงินเข้าบัญชี
+            </h3>
+
+            <button class="close"
+                    onclick="closeModal('walletMoneyModal')">
+
+                <i class="fa-solid fa-xmark"></i>
+
+            </button>
+
+        </div>
+
+
+        <div id="walletMoneyInfo"
+             style="
+                background:#f8fafc;
+                border-radius:14px;
+                padding:12px;
+                margin-bottom:14px;
+                font-size:10px;
+             ">
+        </div>
+
+
+        <div class="field">
+
+            <label>
+                จำนวนเงินที่ต้องการเติม
+            </label>
+
+            <input id="walletMoneyAmount"
+                   type="number"
+                   min="1"
+                   placeholder="เช่น 1000">
+
+        </div>
+
+
+        <div class="field">
+
+            <label>
+                หมายเหตุ
+            </label>
+
+            <input id="walletMoneyNote"
+                   placeholder="เช่น โอนเงินเข้า">
+
+        </div>
+
+
+        <button class="submit"
+                onclick="addWalletMoney()">
+
+            เติมเงิน
+
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- ================= IDENTITY MODAL ================= -->
+
+<div id="identityModal"
+     class="modal">
+
+    <div class="sheet">
+
+        <div class="sheet-head">
+
+            <h3>
+                การยืนยันตัวตน
+            </h3>
+
+            <button class="close"
+                    onclick="closeModal('identityModal')">
+
+                <i class="fa-solid fa-xmark"></i>
+
+            </button>
+
+        </div>
+
+
+        <div style="
+            text-align:center;
+            padding:10px 10px 20px;
+        ">
+
+            <div style="
+                width:65px;
+                height:65px;
+                border-radius:20px;
+                margin:auto;
+                background:#dcfce7;
+                color:#16a34a;
+                display:flex;
+                align-items:center;
+                justify-content:center;
+                font-size:27px;
+            ">
+
+                <i class="fa-solid fa-shield-check"></i>
+
+            </div>
+
+
+            <h3 style="
+                font-size:15px;
+                margin-top:12px
+            ">
+
+                ยืนยันตัวตนสำเร็จ
+
+            </h3>
+
+
+            <p style="
+                color:#64748b;
+                font-size:10px;
+                line-height:1.6;
+                margin-top:5px
+            ">
+
+                บัญชีของคุณผ่านการยืนยันแล้ว
+                สามารถใช้งานระบบการเงินและเชื่อมต่อบัญชีได้
+
+            </p>
+
+        </div>
+
+
+        <div class="card"
+             style="
+                box-shadow:none;
+                background:#f8fafc
+             ">
+
+            <div style="
+                display:flex;
+                justify-content:space-between;
+                font-size:10px;
+                margin-bottom:9px;
+            ">
+
+                <span>
+                    สถานะบัญชี
+                </span>
+
+                <strong style="color:#16a34a">
+                    Verified ✓
+                </strong>
+
+            </div>
+
+
+            <div style="
+                display:flex;
+                justify-content:space-between;
+                font-size:10px;
+            ">
+
+                <span>
+                    ระดับความปลอดภัย
+                </span>
+
+                <strong>
+                    สูง
+                </strong>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ================= SCAN MODAL ================= -->
+
+<div id="scanModal"
+     class="modal">
+
+    <div class="sheet">
+
+        <div class="sheet-head">
+
+            <h3>
+                AI Bill Scanner
+            </h3>
+
+            <button class="close"
+                    onclick="closeModal('scanModal')">
+
+                <i class="fa-solid fa-xmark"></i>
+
+            </button>
+
+        </div>
+
+
+        <div style="
+            border:2px dashed #c4b5fd;
+            background:#faf8ff;
+            border-radius:18px;
+            padding:30px 15px;
+            text-align:center;
+        ">
+
+            <div style="
+                width:55px;
+                height:55px;
+                margin:auto;
+                border-radius:16px;
+                background:#ede9fe;
+                color:#7c3aed;
+                display:flex;
+                align-items:center;
+                justify-content:center;
+                font-size:22px;
+            ">
+
+                <i class="fa-solid fa-camera"></i>
+
+            </div>
+
+
+            <h4 style="
+                font-size:13px;
+                margin-top:10px
+            ">
+
+                สแกนใบเสร็จ
+
+            </h4>
+
+
+            <p style="
+                font-size:9px;
+                color:#64748b;
+                margin-top:4px;
+            ">
+
+                AI จะอ่านยอดเงิน วันที่ และหมวดหมู่ให้อัตโนมัติ
+
+            </p>
+
+
+            <button class="submit"
+                    style="margin-top:15px"
+                    onclick="scanReceipt()">
+
+                <i class="fa-solid fa-camera"></i>
+
+                เปิดกล้อง
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ================= ALL TRANSACTIONS ================= -->
+
+<div id="transactionsModal"
+     class="modal">
+
+    <div class="sheet">
+
+        <div class="sheet-head">
+
+            <h3>
+                รายการทั้งหมด
+            </h3>
+
+            <button class="close"
+                    onclick="closeModal('transactionsModal')">
+
+                <i class="fa-solid fa-xmark"></i>
+
+            </button>
+
+        </div>
+
+
+        <div id="allTransactions"></div>
+
+    </div>
+
+</div>
+
+
+<!-- ================= TRANSACTION DETAIL ================= -->
+
+<div id="transactionDetailModal"
+     class="modal">
+
+    <div class="sheet">
+
+        <div class="sheet-head">
+
+            <h3>
+                รายละเอียดรายการ
+            </h3>
+
+            <button class="close"
+                    onclick="closeModal('transactionDetailModal')">
+
+                <i class="fa-solid fa-xmark"></i>
+
+            </button>
+
+        </div>
+
+
+        <div id="transactionDetail"></div>
+
+    </div>
+
+</div>
+
+
+<!-- ================= TOAST ================= -->
+
+<div id="toast"
+     class="toast">
+</div>
+
+</div>
+
+
+<script>
+
+/* =========================================================
+   DATA
+========================================================= */
+
+let goalAmount = 25000;
+let goalTarget = 50000;
+let currentGoalId = 1;
+
+let currentWalletId = null;
+
+
+let wallets = [
+
+    {
+        id:1,
+        name:"ธนาคารหลัก",
+        type:"บัญชีธนาคาร",
+        detail:"บัญชีออมทรัพย์ •••• 4821",
+        amount:62000,
+        icon:"fa-building-columns",
+        color:"#4f46e5",
+        bg:"#eef2ff"
+    },
+
+    {
+        id:2,
+        name:"บัตรเครดิต",
+        type:"บัตรเครดิต",
+        detail:"วงเงินคงเหลือ",
+        amount:12250,
+        icon:"fa-credit-card",
+        color:"#10b981",
+        bg:"#ecfdf5"
+    },
+
+    {
+        id:3,
+        name:"เงินสด",
+        type:"เงินสด",
+        detail:"กระเป๋าเงินส่วนตัว",
+        amount:10000,
+        icon:"fa-wallet",
+        color:"#f59e0b",
+        bg:"#fff7ed"
+    }
+
+];
+
+
+let transactions = [
+
+    {
+        id:1,
+        type:"expense",
+        amount:450,
+        category:"อาหาร",
+        note:"อาหารกลางวัน",
+        walletId:3,
+        date:"วันนี้ • 12:30"
+    },
+
+    {
+        id:2,
+        type:"expense",
+        amount:1290,
+        category:"ช้อปปิ้ง",
+        note:"ของใช้ส่วนตัว",
+        walletId:1,
+        date:"วันนี้ • 10:15"
+    },
+
+    {
+        id:3,
+        type:"income",
+        amount:45000,
+        category:"เงินเดือน",
+        note:"เงินเดือนประจำเดือน",
+        walletId:1,
+        date:"1 ก.ย. • 09:00"
+    },
+
+    {
+        id:4,
+        type:"expense",
+        amount:850,
+        category:"เดินทาง",
+        note:"ค่าเดินทาง",
+        walletId:3,
+        date:"31 ส.ค. • 18:20"
+    }
+
+];
+
+
+/* =========================================================
+   TAB
+========================================================= */
+
+function switchTab(index){
+
+    const views =
+        document.querySelectorAll(".view");
+
+    const navs =
+        document.querySelectorAll(".nav-item");
+
+
+    views.forEach(v =>
+        v.classList.remove("active")
+    );
+
+    navs.forEach(n =>
+        n.classList.remove("active")
+    );
+
+
+    views[index].classList.add("active");
+
+
+    if(navs[index]){
+        navs[index].classList.add("active");
+    }
+
+
+    const titles = [
+
+        [
+            "ซิงค์ข้อมูลล่าสุด • วันนี้",
+            "สวัสดี, Alex 👋"
+        ],
+
+        [
+            "ภาพรวมการใช้จ่าย",
+            "สถิติการเงิน"
+        ],
+
+        [
+            "จัดการบัญชีทั้งหมด",
+            "กระเป๋าเงิน"
+        ],
+
+        [
+            "ความปลอดภัยและระบบ",
+            "ตั้งค่า"
+        ]
+
+    ];
+
+
+    document.getElementById("headerSub")
+        .textContent = titles[index][0];
+
+
+    document.getElementById("headerTitle")
+        .textContent = titles[index][1];
+
+
+    document.querySelector(".body")
+        .scrollTop = 0;
+
+
+    if(index === 1){
+
+        setTimeout(() => {
+
+            const active =
+                document.querySelector(".period.active");
+
+            const period =
+                active?.dataset.period || "month";
+
+            updateLineChart(period);
+
+        },50);
+
+    }
+
+
+    if(index === 2){
+        renderWallets();
+    }
+
+
+    if(index === 0){
+
+        renderRecentTransactions();
+
+        updateHomeBalance();
+
+    }
+
+}
+
+
+/* =========================================================
+   MODAL
+========================================================= */
+
+function openModal(id){
+
+    const modal =
+        document.getElementById(id);
+
+    if(modal){
+        modal.classList.add("show");
+    }
+
+}
+
+
+function closeModal(id){
+
+    const modal =
+        document.getElementById(id);
+
+    if(modal){
+        modal.classList.remove("show");
+    }
+
+}
+
+
+/* =========================================================
+   TOAST
+========================================================= */
+
+let toastTimer;
+
+
+function showToast(message){
+
+    const toast =
+        document.getElementById("toast");
+
+
+    toast.textContent =
+        message;
+
+
+    toast.classList.add("show");
+
+
+    clearTimeout(toastTimer);
+
+
+    toastTimer =
+        setTimeout(() => {
+
+            toast.classList.remove("show");
+
+        },2200);
+
+}
+
+
+/* =========================================================
+   MONEY
+========================================================= */
+
+function money(amount){
+
+    return "฿" +
+        Number(amount).toLocaleString("th-TH",{
+            minimumFractionDigits:0,
+            maximumFractionDigits:2
+        });
+
+}
+
+
+function getWalletTotal(){
+
+    return wallets.reduce(
+        (sum,wallet) =>
+            sum + Number(wallet.amount),
+        0
+    );
+
+}
+
+
+/* =========================================================
+   HOME
+========================================================= */
+
+function updateHomeBalance(){
+
+    const total =
+        getWalletTotal();
+
+
+    document.getElementById("totalBalance")
+        .textContent =
+            money(total) + ".00";
+
+
+    const income =
+        transactions
+        .filter(t => t.type === "income")
+        .reduce(
+            (sum,t) =>
+                sum + Number(t.amount),
+            0
+        );
+
+
+    const expense =
+        transactions
+        .filter(t => t.type === "expense")
+        .reduce(
+            (sum,t) =>
+                sum + Number(t.amount),
+            0
+        );
+
+
+    document.getElementById("homeIncome")
+        .textContent =
+            money(income);
+
+
+    document.getElementById("homeExpense")
+        .textContent =
+            money(expense);
+
+}
+
+
+/* =========================================================
+   TRANSACTIONS
+========================================================= */
+
+function getCategoryIcon(category){
+
+    const icons = {
+
+        "อาหาร":"fa-utensils",
+        "ช้อปปิ้ง":"fa-bag-shopping",
+        "เดินทาง":"fa-car",
+        "บิลและค่าสาธารณูปโภค":"fa-file-invoice",
+        "สุขภาพ":"fa-heart-pulse",
+        "บันเทิง":"fa-film",
+        "การศึกษา":"fa-book",
+        "เงินเดือน":"fa-money-bill-wave",
+        "โบนัส":"fa-gift",
+        "เติมเงิน":"fa-money-bill-transfer",
+        "อื่นๆ":"fa-tag"
+
+    };
+
+
+    return icons[category] || "fa-tag";
+
+}
+
+
+function getWalletName(id){
+
+    const wallet =
+        wallets.find(
+            w => w.id === Number(id)
+        );
+
+
+    return wallet
+        ? wallet.name
+        : "ไม่ระบุบัญชี";
+
+}
+
+
+function transactionHTML(t){
+
+    const icon =
+        t.type === "income"
+        ? "fa-arrow-down"
+        : getCategoryIcon(t.category);
+
+
+    const sign =
+        t.type === "income"
+        ? "+"
+        : "-";
+
+
+    return `
+
+        <div class="transaction-item"
+             onclick="showTransactionDetail(${t.id})">
+
+            <div class="transaction-left">
+
+                <div class="transaction-icon ${t.type}">
+
+                    <i class="fa-solid ${icon}"></i>
+
+                </div>
+
+                <div>
+
+                    <div class="transaction-name">
+
+                        ${escapeHTML(
+                            t.note || t.category
+                        )}
+
+                    </div>
+
+                    <div class="transaction-meta">
+
+                        ${escapeHTML(t.category)}
+                        •
+                        ${escapeHTML(getWalletName(t.walletId))}
+                        •
+                        ${escapeHTML(t.date)}
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="transaction-money ${t.type}">
+
+                ${sign}${money(t.amount)}
+
+            </div>
+
+        </div>
+
+    `;
+
+}
+
+
+function renderRecentTransactions(){
+
+    const container =
+        document.getElementById(
+            "recentTransactions"
+        );
+
+
+    const recent =
+        transactions
+        .slice()
+        .reverse()
+        .slice(0,5);
+
+
+    if(!recent.length){
+
+        container.innerHTML = `
+            <div class="empty">
+                ยังไม่มีรายการ
+            </div>
+        `;
+
+        return;
+    }
+
+
+    container.innerHTML =
+        recent
+        .map(transactionHTML)
+        .join("");
+
+}
+
+
+function openAllTransactions(){
+
+    renderAllTransactions();
+
+    openModal("transactionsModal");
+
+}
+
+
+function renderAllTransactions(){
+
+    const container =
+        document.getElementById(
+            "allTransactions"
+        );
+
+
+    const list =
+        transactions
+        .slice()
+        .reverse();
+
+
+    if(!list.length){
+
+        container.innerHTML = `
+            <div class="empty">
+                ยังไม่มีรายการรับหรือจ่าย
+            </div>
+        `;
+
+        return;
+    }
+
+
+    container.innerHTML =
+        list.map(transactionHTML).join("");
+
+}
+
+
+function showTransactionDetail(id){
+
+    const t =
+        transactions.find(
+            x => x.id === id
+        );
+
+
+    if(!t) return;
+
+
+    const sign =
+        t.type === "income"
+        ? "+"
+        : "-";
+
+
+    const color =
+        t.type === "income"
+        ? "#10b981"
+        : "#ef4444";
+
+
+    document.getElementById(
+        "transactionDetail"
+    ).innerHTML = `
+
+        <div style="
+            text-align:center;
+            padding:10px 0 18px;
+        ">
+
+            <div style="
+                width:58px;
+                height:58px;
+                border-radius:18px;
+                background:${
+                    t.type === "income"
+                    ? "#ecfdf5"
+                    : "#fff1f2"
+                };
+                color:${color};
+                display:flex;
+                align-items:center;
+                justify-content:center;
+                margin:auto;
+                font-size:22px;
+            ">
+
+                <i class="fa-solid ${
+                    t.type === "income"
+                    ? "fa-arrow-down"
+                    : getCategoryIcon(t.category)
+                }"></i>
+
+            </div>
+
+
+            <h2 style="
+                margin-top:10px;
+                font-size:24px;
+                color:${color};
+            ">
+
+                ${sign}${money(t.amount)}
+
+            </h2>
+
+
+            <p style="
+                font-size:10px;
+                color:#7b8497;
+                margin-top:3px;
+            ">
+
+                ${
+                    t.type === "income"
+                    ? "รายรับ"
+                    : "รายจ่าย"
+                }
+
+            </p>
+
+        </div>
+
+
+        <div class="card"
+             style="
+                box-shadow:none;
+                background:#f8fafc
+             ">
+
+            <div class="detail-row">
+
+                <span class="detail-label">
+                    รายละเอียด
+                </span>
+
+                <strong>
+                    ${escapeHTML(t.note || "-")}
+                </strong>
+
+            </div>
+
+
+            <div class="detail-row">
+
+                <span class="detail-label">
+                    หมวดหมู่
+                </span>
+
+                <strong>
+                    ${escapeHTML(t.category)}
+                </strong>
+
+            </div>
+
+
+            <div class="detail-row">
+
+                <span class="detail-label">
+                    บัญชี
+                </span>
+
+                <strong>
+                    ${escapeHTML(
+                        getWalletName(t.walletId)
+                    )}
+                </strong>
+
+            </div>
+
+
+            <div class="detail-row">
+
+                <span class="detail-label">
+                    วันที่
+                </span>
+
+                <strong>
+                    ${escapeHTML(t.date)}
+                </strong>
+
+            </div>
+
+        </div>
+
+    `;
+
+
+    closeModal("transactionsModal");
+
+    openModal("transactionDetailModal");
+
+}
+
+
+function escapeHTML(text){
+
+    return String(text)
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
+
+}
+
+
+/* =========================================================
+   SAVE TRANSACTION
+========================================================= */
+
+function saveTransaction(){
+
+    const amount =
+        Number(
+            document.getElementById(
+                "transactionAmount"
+            ).value
+        );
+
+
+    const type =
+        document.getElementById(
+            "transactionType"
+        ).value;
+
+
+    const category =
+        document.getElementById(
+            "transactionCategory"
+        ).value;
+
+
+    const walletId =
+        Number(
+            document.getElementById(
+                "transactionWallet"
+            ).value
+        );
+
+
+    const note =
+        document.getElementById(
+            "transactionNote"
+        ).value.trim();
+
+
+    if(!amount || amount <= 0){
+
+        showToast(
+            "กรุณาระบุจำนวนเงิน"
+        );
+
+        return;
+    }
+
+
+    const wallet =
+        wallets.find(
+            w => w.id === walletId
+        );
+
+
+    if(!wallet){
+
+        showToast(
+            "กรุณาเลือกบัญชี"
+        );
+
+        return;
+    }
+
+
+    if(type === "expense"){
+
+        if(wallet.amount < amount){
+
+            showToast(
+                "ยอดเงินในบัญชีไม่เพียงพอ"
+            );
+
+            return;
+        }
+
+
+        wallet.amount -= amount;
+
+    }else{
+
+        wallet.amount += amount;
+
+    }
+
+
+    const now =
+        new Date();
+
+
+    const time =
+        now.toLocaleTimeString(
+            "th-TH",
+            {
+                hour:"2-digit",
+                minute:"2-digit"
+            }
+        );
+
+
+    transactions.push({
+
+        id:Date.now(),
+
+        type:type,
+
+        amount:amount,
+
+        category:category,
+
+        note:note || category,
+
+        walletId:walletId,
+
+        date:"วันนี้ • " + time
+
+    });
+
+
+    document.getElementById(
+        "transactionAmount"
+    ).value = "";
+
+
+    document.getElementById(
+        "transactionNote"
+    ).value = "";
+
+
+    closeModal(
+        "transactionModal"
+    );
+
+
+    updateHomeBalance();
+
+    renderRecentTransactions();
+
+    renderWallets();
+
+
+    showToast(
+
+        type === "expense"
+        ? `บันทึกรายจ่าย ${money(amount)} สำเร็จ`
+        : `บันทึกรายรับ ${money(amount)} สำเร็จ`
+
+    );
+
+}
+
+
+/* =========================================================
+   WALLET
+========================================================= */
+
+function renderWallets(){
+
+    const container =
+        document.getElementById(
+            "walletList"
+        );
+
+
+    if(!wallets.length){
+
+        container.innerHTML = `
+            <div class="empty">
+                ยังไม่มีบัญชี
+            </div>
+        `;
+
+        return;
+    }
+
+
+    container.innerHTML =
+        wallets.map(wallet => `
+
+        <div class="wallet">
+
+            <div class="wallet-left">
+
+                <div class="wallet-icon"
+                     style="
+                        background:${wallet.bg};
+                        color:${wallet.color};
+                     ">
+
+                    <i class="fa-solid ${wallet.icon}"></i>
+
+                </div>
+
+
+                <div>
+
+                    <h4>
+                        ${escapeHTML(wallet.name)}
+                    </h4>
+
+                    <p>
+                        ${escapeHTML(
+                            wallet.detail || wallet.type
+                        )}
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div style="text-align:right">
+
+                <div class="wallet-money">
+                    ${money(wallet.amount)}
+                </div>
+
+
+                <div class="wallet-actions">
+
+                    <button class="wallet-add"
+                            onclick="
+                                event.stopPropagation();
+                                openWalletMoney(${wallet.id});
+                            ">
+
+                        <i class="fa-solid fa-plus"></i>
+
+                        เติมเงิน
+
+                    </button>
+
+
+                    <button class="small-btn"
+                            onclick="
+                                event.stopPropagation();
+                                showWalletDetail(${wallet.id});
+                            ">
+
+                        <i class="fa-solid fa-eye"></i>
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    `).join("");
+
+
+    document.getElementById(
+        "walletTotal"
+    ).textContent =
+        money(getWalletTotal()) + ".00";
+
+
+    document.getElementById(
+        "walletCount"
+    ).textContent =
+        wallets.length;
+
+
+    updateTransactionWalletOptions();
+
+}
+
+
+function updateTransactionWalletOptions(){
+
+    const select =
+        document.getElementById(
+            "transactionWallet"
+        );
+
+
+    if(!select) return;
+
+
+    const current =
+        select.value;
+
+
+    select.innerHTML =
+        wallets.map(w => `
+
+            <option value="${w.id}">
+
+                ${escapeHTML(w.name)}
+                •
+                ${money(w.amount)}
+
+            </option>
+
+        `).join("");
+
+
+    if(
+        current &&
+        wallets.some(
+            w => w.id === Number(current)
+        )
+    ){
+
+        select.value = current;
+
+    }
+
+}
+
+
+function getWalletIcon(type){
+
+    if(type === "บัญชีธนาคาร"){
+
+        return {
+            icon:"fa-building-columns",
+            color:"#4f46e5",
+            bg:"#eef2ff"
+        };
+
+    }
+
+
+    if(type === "เงินสด"){
+
+        return {
+            icon:"fa-wallet",
+            color:"#f59e0b",
+            bg:"#fff7ed"
+        };
+
+    }
+
+
+    if(type === "บัตรเครดิต"){
+
+        return {
+            icon:"fa-credit-card",
+            color:"#10b981",
+            bg:"#ecfdf5"
+        };
+
+    }
+
+
+    return {
+        icon:"fa-mobile-screen-button",
+        color:"#7c3aed",
+        bg:"#f3e8ff"
+    };
+
+}
+
+
+function createWallet(){
+
+    const name =
+        document.getElementById(
+            "walletName"
+        ).value.trim();
+
+
+    const type =
+        document.getElementById(
+            "walletType"
+        ).value;
+
+
+    const amount =
+        Number(
+            document.getElementById(
+                "walletAmount"
+            ).value
+        );
+
+
+    if(!name){
+
+        showToast(
+            "กรุณาระบุชื่อบัญชี"
+        );
+
+        return;
+    }
+
+
+    if(amount < 0 || isNaN(amount)){
+
+        showToast(
+            "จำนวนเงินไม่ถูกต้อง"
+        );
+
+        return;
+    }
+
+
+    const style =
+        getWalletIcon(type);
+
+
+    wallets.push({
+
+        id:Date.now(),
+
+        name:name,
+
+        type:type,
+
+        detail:
+            type === "บัญชีธนาคาร"
+            ? "บัญชีใหม่"
+            : type,
+
+        amount:amount,
+
+        icon:style.icon,
+
+        color:style.color,
+
+        bg:style.bg
+
+    });
+
+
+    document.getElementById(
+        "walletName"
+    ).value = "";
+
+
+    document.getElementById(
+        "walletAmount"
+    ).value = "";
+
+
+    closeModal("walletModal");
+
+
+    renderWallets();
+
+    updateHomeBalance();
+
+
+    showToast(
+        "เพิ่มบัญชีสำเร็จ"
+    );
+
+}
+
+
+function openWalletMoney(id){
+
+    currentWalletId = id;
+
+
+    const wallet =
+        wallets.find(
+            w => w.id === id
+        );
+
+
+    if(!wallet) return;
+
+
+    document.getElementById(
+        "walletMoneyInfo"
+    ).innerHTML = `
+
+        <strong>
+            ${escapeHTML(wallet.name)}
+        </strong>
+
+        <div style="
+            color:#64748b;
+            margin-top:3px;
+        ">
+
+            ยอดปัจจุบัน
+            ${money(wallet.amount)}
+
+        </div>
+
+    `;
+
+
+    document.getElementById(
+        "walletMoneyAmount"
+    ).value = "";
+
+
+    document.getElementById(
+        "walletMoneyNote"
+    ).value = "";
+
+
+    openModal(
+        "walletMoneyModal"
+    );
+
+}
+
+
+function addWalletMoney(){
+
+    const amount =
+        Number(
+            document.getElementById(
+                "walletMoneyAmount"
+            ).value
+        );
+
+
+    const note =
+        document.getElementById(
+            "walletMoneyNote"
+        ).value.trim();
+
+
+    if(!amount || amount <= 0){
+
+        showToast(
+            "กรุณาระบุจำนวนเงิน"
+        );
+
+        return;
+    }
+
+
+    const wallet =
+        wallets.find(
+            w => w.id === currentWalletId
+        );
+
+
+    if(!wallet){
+
+        showToast(
+            "ไม่พบบัญชี"
+        );
+
+        return;
+    }
+
+
+    wallet.amount += amount;
+
+
+    transactions.push({
+
+        id:Date.now(),
+
+        type:"income",
+
+        amount:amount,
+
+        category:"เติมเงิน",
+
+        note:
+            note ||
+            "เติมเงินเข้า Wallet",
+
+        walletId:wallet.id,
+
+        date:
+            "วันนี้ • " +
+            new Date()
+            .toLocaleTimeString(
+                "th-TH",
+                {
+                    hour:"2-digit",
+                    minute:"2-digit"
+                }
+            )
+
+    });
+
+
+    closeModal(
+        "walletMoneyModal"
+    );
+
+
+    renderWallets();
+
+    renderRecentTransactions();
+
+    updateHomeBalance();
+
+
+    showToast(
+        `เติมเงิน ${money(amount)} เข้า ${wallet.name} แล้ว`
+    );
+
+}
+
+
+function showWalletDetail(id){
+
+    const wallet =
+        wallets.find(
+            w => w.id === id
+        );
+
+
+    if(!wallet) return;
+
+
+    const walletTransactions =
+        transactions
+        .filter(
+            t => t.walletId === id
+        )
+        .slice()
+        .reverse()
+        .slice(0,5);
+
+
+    const income =
+        transactions
+        .filter(
+            t =>
+                t.walletId === id &&
+                t.type === "income"
+        )
+        .reduce(
+            (sum,t) =>
+                sum + Number(t.amount),
+            0
+        );
+
+
+    const expense =
+        transactions
+        .filter(
+            t =>
+                t.walletId === id &&
+                t.type === "expense"
+        )
+        .reduce(
+            (sum,t) =>
+                sum + Number(t.amount),
+            0
+        );
+
+
+    document.getElementById(
+        "transactionDetail"
+    ).innerHTML = `
+
+        <div style="
+            text-align:center;
+            padding:10px 0 15px;
+        ">
+
+            <div style="
+                width:58px;
+                height:58px;
+                border-radius:18px;
+                background:${wallet.bg};
+                color:${wallet.color};
+                display:flex;
+                align-items:center;
+                justify-content:center;
+                margin:auto;
+                font-size:22px;
+            ">
+
+                <i class="fa-solid ${wallet.icon}"></i>
+
+            </div>
+
+
+            <h3 style="
+                font-size:16px;
+                margin-top:9px;
+            ">
+
+                ${escapeHTML(wallet.name)}
+
+            </h3>
+
+
+            <h2 style="
+                font-size:25px;
+                color:#172033;
+                margin-top:4px;
+            ">
+
+                ${money(wallet.amount)}
+
+            </h2>
+
+
+            <p style="
+                color:#7b8497;
+                font-size:9px;
+            ">
+
+                ${escapeHTML(wallet.type)}
+
+            </p>
+
+        </div>
+
+
+        <div class="card"
+             style="
+                box-shadow:none;
+                background:#f8fafc
+             ">
+
+            <div class="detail-row">
+
+                <span class="detail-label">
+                    รายรับ
+                </span>
+
+                <strong style="color:#10b981">
+                    +${money(income)}
+                </strong>
+
+            </div>
+
+
+            <div class="detail-row">
+
+                <span class="detail-label">
+                    รายจ่าย
+                </span>
+
+                <strong style="color:#ef4444">
+                    -${money(expense)}
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <h4 style="
+            font-size:12px;
+            margin:15px 2px 8px;
+        ">
+
+            รายการล่าสุดของบัญชี
+
+        </h4>
+
+
+        <div class="card"
+             style="
+                padding:0 14px;
+                box-shadow:none
+             ">
+
+            ${
+                walletTransactions.length
+                ? walletTransactions
+                    .map(transactionHTML)
+                    .join("")
+                : `<div class="empty">
+                    ยังไม่มีรายการ
+                   </div>`
+            }
+
+        </div>
+
+
+        <button class="submit"
+                onclick="
+                    closeModal('transactionDetailModal');
+                    openWalletMoney(${wallet.id});
+                ">
+
+            <i class="fa-solid fa-plus"></i>
+
+            เติมเงินเข้าบัญชี
+
+        </button>
+
+    `;
+
+
+    openModal(
+        "transactionDetailModal"
+    );
+
+}
+
+
+/* =========================================================
+   GOALS
+========================================================= */
+
+function openGoalMoney(id){
+
+    currentGoalId = id;
+
+
+    document.getElementById(
+        "goalMoney"
+    ).value = "";
+
+
+    openModal(
+        "goalMoneyModal"
+    );
+
+}
+
+
+function addGoalMoney(){
+
+    const amount =
+        Number(
+            document.getElementById(
+                "goalMoney"
+            ).value
+        );
+
+
+    if(!amount || amount <= 0){
+
+        showToast(
+            "กรุณาระบุจำนวนเงิน"
+        );
+
+        return;
+    }
+
+
+    goalAmount += amount;
+
+
+    if(goalAmount > goalTarget){
+
+        goalAmount =
+            goalTarget;
+
+    }
+
+
+    updateGoal();
+
+
+    closeModal(
+        "goalMoneyModal"
+    );
+
+
+    showToast(
+        `เพิ่มเงินออม ${money(amount)} สำเร็จ`
+    );
+
+}
+
+
+function updateGoal(){
+
+    const percent =
+        Math.round(
+            (goalAmount / goalTarget) * 100
+        );
+
+
+    document.getElementById(
+        "goalAmount1"
+    ).textContent =
+        money(goalAmount);
+
+
+    document.getElementById(
+        "goalProgress1"
+    ).style.width =
+        percent + "%";
+
+
+    document.getElementById(
+        "goalPercent1"
+    ).textContent =
+        percent + "% สำเร็จ";
+
+}
+
+
+function createGoal(){
+
+    const name =
+        document.getElementById(
+            "newGoalName"
+        ).value.trim();
+
+
+    const target =
+        Number(
+            document.getElementById(
+                "newGoalTarget"
+            ).value
+        );
+
+
+    if(
+        !name ||
+        !target ||
+        target <= 0
+    ){
+
+        showToast(
+            "กรุณากรอกข้อมูลให้ครบ"
+        );
+
+        return;
+    }
+
+
+    const goal =
+        document.createElement(
+            "div"
+        );
+
+
+    goal.className =
+        "goal";
+
+
+    goal.innerHTML = `
+
+        <div class="goal-top">
+
+            <div class="goal-info">
+
+                <div class="goal-icon">
+
+                    <i class="fa-solid fa-bullseye"></i>
+
+                </div>
+
+
+                <div>
+
+                    <h4>
+                        ${escapeHTML(name)}
+                    </h4>
+
+                    <p>
+                        เป้าหมาย ${money(target)}
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="goal-amount">
+                ฿0
+            </div>
+
+        </div>
+
+
+        <div class="progress">
+
+            <div style="width:0%"></div>
+
+        </div>
+
+
+        <div class="goal-bottom">
+
+            <span>
+                0% สำเร็จ
+            </span>
+
+
+            <button class="add-goal-money"
+                    onclick="
+                        showToast(
+                            'เป้าหมายใหม่พร้อมเติมเงินแล้ว'
+                        )
+                    ">
+
+                + เติมเงิน
+
+            </button>
+
+        </div>
+
+    `;
+
+
+    document.getElementById(
+        "goalList"
+    ).appendChild(goal);
+
+
+    document.getElementById(
+        "newGoalName"
+    ).value = "";
+
+
+    document.getElementById(
+        "newGoalTarget"
+    ).value = "";
+
+
+    closeModal(
+        "goalModal"
+    );
+
+
+    showToast(
+        "สร้างเป้าหมายใหม่สำเร็จ"
+    );
+
+}
+
+
+/* =========================================================
+   CHART DATA
+========================================================= */
+
+const chartData = {
+
+    month:{
+
+        label:"เดือนนี้",
+
+        labels:[
+            "จ.",
+            "อ.",
+            "พ.",
+            "พฤ.",
+            "ศ.",
+            "ส.",
+            "อา."
+        ],
+
+        income:[
+            18000,
+            26000,
+            22000,
+            31000,
+            27000,
+            24000,
+            29000
+        ],
+
+        expense:[
+            5200,
+            7600,
+            6100,
+            9300,
+            7400,
+            5600,
+            8100
+        ]
+
+    },
+
+
+    last:{
+
+        label:"เดือนที่แล้ว",
+
+        labels:[
+            "จ.",
+            "อ.",
+            "พ.",
+            "พฤ.",
+            "ศ.",
+            "ส.",
+            "อา."
+        ],
+
+        income:[
+            15000,
+            22000,
+            19000,
+            25000,
+            23000,
+            21000,
+            24000
+        ],
+
+        expense:[
+            6200,
+            8400,
+            7100,
+            9600,
+            8900,
+            7200,
+            9300
+        ]
+
+    },
+
+
+    "3month":{
+
+        label:"ย้อนหลัง 3 เดือน",
+
+        labels:[
+            "มิ.ย.",
+            "ก.ค.",
+            "ส.ค.",
+            "ก.ย."
+        ],
+
+        income:[
+            39000,
+            42000,
+            49000,
+            45000
+        ],
+
+        expense:[
+            14500,
+            17100,
+            19100,
+            12450
+        ]
+
+    },
+
+
+    year:{
+
+        label:"ปี 2026",
+
+        labels:[
+            "ม.ค.",
+            "ก.พ.",
+            "มี.ค.",
+            "เม.ย.",
+            "พ.ค.",
+            "มิ.ย.",
+            "ก.ค.",
+            "ส.ค.",
+            "ก.ย."
+        ],
+
+        income:[
+            39000,
+            41000,
+            44000,
+            43000,
+            47000,
+            49000,
+            51000,
+            46000,
+            45000
+        ],
+
+        expense:[
+            17000,
+            18500,
+            19300,
+            20500,
+            18700,
+            16400,
+            21300,
+            15100,
+            12450
+        ]
+
+    }
+
+};
+
+
+/* =========================================================
+   IMPROVED CHART
+========================================================= */
+
+function formatChartMoney(value){
+
+    if(value >= 1000){
+
+        return "฿" +
+            Math.round(value / 1000) +
+            "K";
+
+    }
+
+
+    return "฿" +
+        Math.round(value);
+
+}
+
+
+function buildPath(values,maxValue){
+
+    const width = 350;
+
+    const height = 165;
+
+    const padding = 10;
+
+
+    const step =
+        values.length === 1
+        ? 0
+        : (width - padding * 2) /
+          (values.length - 1);
+
+
+    return values.map(
+        (value,index) => {
+
+            const x =
+                padding +
+                index * step;
+
+
+            const y =
+                height -
+                (
+                    (value / maxValue) *
+                    (height - 20)
+                );
+
+
+            return {
+                x,
+                y,
+                value
+            };
+
+        }
+    );
+
+}
+
+
+function pointsToPath(points){
+
+    return points
+        .map(
+            (p,index) =>
+                `${
+                    index === 0
+                    ? "M"
+                    : "L"
+                } ${p.x} ${p.y}`
+        )
+        .join(" ");
+
+}
+
+
+function pointsToArea(points){
+
+    if(!points.length){
+        return "";
+    }
+
+
+    const base = 165;
+
+
+    return `
+
+        M ${points[0].x} ${base}
+
+        L ${points[0].x} ${points[0].y}
+
+        ${
+            points
+            .slice(1)
+            .map(
+                p =>
+                    `L ${p.x} ${p.y}`
+            )
+            .join(" ")
+        }
+
+        L ${
+            points[points.length - 1].x
+        } ${base}
+
+        Z
+
+    `;
+
+}
+
+
+function renderYAxis(maxValue){
+
+    const yAxis =
+        document.getElementById(
+            "yAxis"
+        );
+
+
+    const steps = 4;
+
+
+    let html = "";
+
+
+    for(
+        let i = steps;
+        i >= 0;
+        i--
+    ){
+
+        const value =
+            maxValue *
+            (i / steps);
+
+
+        html += `
+
+            <span>
+                ${formatChartMoney(value)}
+            </span>
+
+        `;
+
+    }
+
+
+    yAxis.innerHTML =
+        html;
+
+}
+
+
+function updateLineChart(period){
+
+    const data =
+        chartData[period];
+
+
+    if(!data) return;
+
+
+    document.getElementById(
+        "chartPeriod"
+    ).textContent =
+        data.label;
+
+
+    /*
+        ใช้ max เดียวกันสำหรับ
+        รายรับและรายจ่าย
+    */
+
+    const maxValue =
+        Math.max(
+            ...data.income,
+            ...data.expense
+        ) * 1.15;
+
+
+    renderYAxis(
+        maxValue
+    );
+
+
+    const incomePoints =
+        buildPath(
+            data.income,
+            maxValue
+        );
+
+
+    const expensePoints =
+        buildPath(
+            data.expense,
+            maxValue
+        );
+
+
+    document.getElementById(
+        "incomeLine"
+    ).setAttribute(
+        "d",
+        pointsToPath(
+            incomePoints
+        )
+    );
+
+
+    document.getElementById(
+        "expenseLine"
+    ).setAttribute(
+        "d",
+        pointsToPath(
+            expensePoints
+        )
+    );
+
+
+    document.getElementById(
+        "incomeArea"
+    ).setAttribute(
+        "d",
+        pointsToArea(
+            incomePoints
+        )
+    );
+
+
+    document.getElementById(
+        "expenseArea"
+    ).setAttribute(
+        "d",
+        pointsToArea(
+            expensePoints
+        )
+    );
+
+
+    renderChartPoints(
+        "incomePoints",
+        incomePoints,
+        "#5b4df5",
+        "รายรับ",
+        data.income
+    );
+
+
+    renderChartPoints(
+        "expensePoints",
+        expensePoints,
+        "#ef4444",
+        "รายจ่าย",
+        data.expense
+    );
+
+
+    document.getElementById(
+        "chartLabels"
+    ).innerHTML =
+
+        data.labels
+        .map(
+            label =>
+                `<span>${label}</span>`
+        )
+        .join("");
+
+}
+
+
+function renderChartPoints(
+    containerId,
+    points,
+    color,
+    label,
+    values
+){
+
+    const group =
+        document.getElementById(
+            containerId
+        );
+
+
+    group.innerHTML = "";
+
+
+    points.forEach(
+        (p,index) => {
+
+            const outer =
+                document.createElementNS(
+                    "http://www.w3.org/2000/svg",
+                    "circle"
+                );
+
+
+            outer.setAttribute(
+                "cx",
+                p.x
+            );
+
+
+            outer.setAttribute(
+                "cy",
+                p.y
+            );
+
+
+            outer.setAttribute(
+                "r",
+                "5"
+            );
+
+
+            outer.setAttribute(
+                "fill",
+                "#fff"
+            );
+
+
+            outer.setAttribute(
+                "stroke",
+                color
+            );
+
+
+            outer.setAttribute(
+                "stroke-width",
+                "2.5"
+            );
+
+
+            outer.style.cursor =
+                "pointer";
+
+
+            const inner =
+                document.createElementNS(
+                    "http://www.w3.org/2000/svg",
+                    "circle"
+                );
+
+
+            inner.setAttribute(
+                "cx",
+                p.x
+            );
+
+
+            inner.setAttribute(
+                "cy",
+                p.y
+            );
+
+
+            inner.setAttribute(
+                "r",
+                "2.5"
+            );
+
+
+            inner.setAttribute(
+                "fill",
+                color
+            );
+
+
+            outer.addEventListener(
+                "mouseenter",
+                () => {
+
+                    showChartTooltip(
+                        p,
+                        `${label} ${formatChartMoney(values[index])}`
+                    );
+
+
+                    outer.setAttribute(
+                        "r",
+                        "7"
+                    );
+
+                }
+            );
+
+
+            outer.addEventListener(
+                "mouseleave",
+                () => {
+
+                    document.getElementById(
+                        "chartTooltip"
+                    ).style.display =
+                        "none";
+
+
+                    outer.setAttribute(
+                        "r",
+                        "5"
+                    );
+
+                }
+            );
+
+
+            /*
+                รองรับมือถือ:
+                แตะจุดเพื่อดู tooltip
+            */
+
+            outer.addEventListener(
+                "click",
+                event => {
+
+                    event.stopPropagation();
+
+
+                    showChartTooltip(
+                        p,
+                        `${label} ${formatChartMoney(values[index])}`
+                    );
+
+
+                    setTimeout(
+                        () => {
+
+                            document.getElementById(
+                                "chartTooltip"
+                            ).style.display =
+                                "none";
+
+                        },
+                        1800
+                    );
+
+                }
+            );
+
+
+            group.appendChild(
+                outer
+            );
+
+
+            group.appendChild(
+                inner
+            );
+
+        }
+    );
+
+}
+
+
+function showChartTooltip(
+    point,
+    text
+){
+
+    const chart =
+        document.getElementById(
+            "lineChart"
+        );
+
+
+    const tooltip =
+        document.getElementById(
+            "chartTooltip"
+        );
+
+
+    tooltip.textContent =
+        text;
+
+
+    tooltip.style.display =
+        "block";
+
+
+    const chartWidth =
+        chart.clientWidth;
+
+
+    const x =
+        34 +
+        (
+            point.x / 350
+        ) *
+        (
+            chartWidth - 34
+        );
+
+
+    let left =
+        x - 45;
+
+
+    left =
+        Math.max(
+            35,
+            Math.min(
+                left,
+                chartWidth - 95
+            )
+        );
+
+
+    tooltip.style.left =
+        left + "px";
+
+
+    tooltip.style.top =
+        Math.max(
+            5,
+            point.y - 35
+        ) + "px";
+
+}
+
+
+/* =========================================================
+   CHANGE PERIOD
+========================================================= */
+
+function changePeriod(
+    period,
+    button
+){
+
+    document
+        .querySelectorAll(".period")
+        .forEach(
+            x => {
+
+                x.classList.remove(
+                    "active"
+                );
+
+                x.removeAttribute(
+                    "data-period"
+                );
+
+            }
+        );
+
+
+    button.classList.add(
+        "active"
+    );
+
+
+    button.setAttribute(
+        "data-period",
+        period
+    );
+
+
+    const income =
+        document.getElementById(
+            "income"
+        );
+
+
+    const expense =
+        document.getElementById(
+            "expense"
+        );
+
+
+    const saving =
+        document.getElementById(
+            "saving"
+        );
+
+
+    const rate =
+        document.getElementById(
+            "savingRate"
+        );
+
+
+    if(period === "month"){
+
+        income.textContent =
+            "+฿45,000";
+
+        expense.textContent =
+            "-฿12,450";
+
+        saving.textContent =
+            "฿32,550";
+
+        rate.textContent =
+            "72.3%";
+
+    }
+
+
+    else if(period === "last"){
+
+        income.textContent =
+            "+฿42,000";
+
+        expense.textContent =
+            "-฿18,900";
+
+        saving.textContent =
+            "฿23,100";
+
+        rate.textContent =
+            "55.0%";
+
+    }
+
+
+    else if(period === "3month"){
+
+        income.textContent =
+            "+฿130,000";
+
+        expense.textContent =
+            "-฿48,200";
+
+        saving.textContent =
+            "฿81,800";
+
+        rate.textContent =
+            "62.9%";
+
+    }
+
+
+    else{
+
+        income.textContent =
+            "+฿540,000";
+
+        expense.textContent =
+            "-฿195,000";
+
+        saving.textContent =
+            "฿345,000";
+
+        rate.textContent =
+            "63.9%";
+
+    }
+
+
+    updateLineChart(
+        period
+    );
+
+}
+
+
+/* =========================================================
+   SCANNER
+========================================================= */
+
+function scanReceipt(){
+
+    closeModal(
+        "scanModal"
+    );
+
+
+    showToast(
+        "กำลังจำลอง AI อ่านใบเสร็จ..."
+    );
+
+
+    setTimeout(
+        () => {
+
+            openModal(
+                "transactionModal"
+            );
+
+
+            document.getElementById(
+                "transactionType"
+            ).value =
+                "expense";
+
+
+            document.getElementById(
+                "transactionAmount"
+            ).value =
+                "325";
+
+
+            document.getElementById(
+                "transactionCategory"
+            ).value =
+                "อาหาร";
+
+
+            document.getElementById(
+                "transactionNote"
+            ).value =
+                "AI อ่านจากใบเสร็จ";
+
+
+            showToast(
+                "AI อ่านใบเสร็จสำเร็จ"
+            );
+
+        },
+        1000
+    );
+
+}
+
+
+/* =========================================================
+   SWITCH
+========================================================= */
+
+function toggleSwitch(
+    element
+){
+
+    element.classList.toggle(
+        "on"
+    );
+
+
+    if(
+        element.classList.contains(
+            "on"
+        )
+    ){
+
+        showToast(
+            "เปิดใช้งานระบบแล้ว"
+        );
+
+    }else{
+
+        showToast(
+            "ปิดระบบแล้ว"
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   MODAL BACKDROP
+========================================================= */
+
+document
+    .querySelectorAll(".modal")
+    .forEach(
+        modal => {
+
+            modal.addEventListener(
+                "click",
+                function(event){
+
+                    if(
+                        event.target === modal
+                    ){
+
+                        modal.classList.remove(
+                            "show"
+                        );
+
+                    }
+
+                }
+            );
+
+        }
+    );
+
+
+/* =========================================================
+   INIT
+========================================================= */
+
+document
+    .querySelector(
+        ".period.active"
+    )
+    .setAttribute(
+        "data-period",
+        "month"
+    );
+
+
+updateGoal();
+
+renderWallets();
+
+renderRecentTransactions();
+
+updateHomeBalance();
+
+updateLineChart(
+    "month"
+);
+
+</script>
+
+</body>
+</html>
